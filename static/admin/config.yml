@@ -1,0 +1,1835 @@
+backend:
+  name: git-gateway
+  branch: master
+
+local_backend: true
+
+media_folder: static/assets
+public_folder: /assets
+i18n:
+  structure: multiple_files
+  locales: [en, es]
+  default_locale: en
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "src/pages/blog-posts"
+    create: true
+    i18n: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {
+          label: Template Key,
+          name: "templateKey",
+          widget: "hidden",
+          default: "blog-post",
+          i18n: duplicate,
+        }
+      - { label: "Title", name: "title", widget: "string", i18n: true }
+      - { label: "Publish Date", name: "date", widget: "datetime", i18n: true }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "text",
+          i18n: true,
+        }
+      - { label: "Image", name: "image", widget: image, i18n: duplicate }
+      - { label: "Body", name: "body", widget: "markdown", i18n: true }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "src/sections/layout.md"
+        label: "Layout"
+        name: "layout"
+        fields:
+          - { label: "key", name: "key", widget: "hidden", default: "layout" }
+          - label: Menu
+            name: menu
+            widget: object
+            fields:
+              - label: Home
+                name: home
+                widget: object
+                fields:
+                  - {
+                      label: Show in Menu,
+                      name: show_in_menu,
+                      widget: boolean,
+                      default: true,
+                    }
+                  - {
+                      label: Label,
+                      name: en_label,
+                      widget: string,
+                      default: "Home",
+                    }
+                  - {
+                      label: Es Label,
+                      name: es_label,
+                      widget: string,
+                      default: "Es Home",
+                    }
+              - label: What we do
+                name: what_we_do
+                widget: object
+                fields:
+                  - {
+                      label: Show in Menu,
+                      name: show_in_menu,
+                      widget: boolean,
+                      default: true,
+                    }
+                  - {
+                      label: Label,
+                      name: en_label,
+                      widget: string,
+                      default: "What we do",
+                    }
+                  - {
+                      label: Es Label,
+                      name: es_label,
+                      widget: string,
+                      default: "Es What we do",
+                    }
+              - label: Sourcing
+                name: sourcing
+                widget: object
+                fields:
+                  - {
+                      label: Show in Menu,
+                      name: show_in_menu,
+                      widget: boolean,
+                      default: false,
+                    }
+                  - {
+                      label: Label,
+                      name: en_label,
+                      widget: string,
+                      default: "Sourcing",
+                    }
+                  - {
+                      label: Es Label,
+                      name: es_label,
+                      widget: string,
+                      default: "Es Sourcing",
+                    }
+              - label: Team
+                name: team
+                widget: object
+                fields:
+                  - {
+                      label: Show in Menu,
+                      name: show_in_menu,
+                      widget: boolean,
+                      default: true,
+                    }
+                  - {
+                      label: Label,
+                      name: en_label,
+                      widget: string,
+                      default: "Team",
+                    }
+                  - {
+                      label: Es Label,
+                      name: es_label,
+                      widget: string,
+                      default: "Es Team",
+                    }
+              - label: Blog
+                name: blog
+                widget: object
+                fields:
+                  - {
+                      label: Show in Menu,
+                      name: show_in_menu,
+                      widget: boolean,
+                      default: true,
+                    }
+                  - {
+                      label: Label,
+                      name: en_label,
+                      widget: string,
+                      default: "Blog",
+                    }
+                  - {
+                      label: Es Label,
+                      name: es_label,
+                      widget: string,
+                      default: "Es Blog",
+                    }
+              - label: Contact
+                name: contact
+                widget: object
+                fields:
+                  - {
+                      label: Show in Menu,
+                      name: show_in_menu,
+                      widget: boolean,
+                      default: true,
+                    }
+                  - {
+                      label: Label,
+                      name: en_label,
+                      widget: string,
+                      default: "Contact",
+                    }
+                  - {
+                      label: Es Label,
+                      name: es_label,
+                      widget: string,
+                      default: "Es Contact",
+                    }
+              - { label: Logo, name: logo, widget: image }
+              - {
+                  label: Mobile Background Image,
+                  name: mobile_background_image,
+                  widget: image,
+                }
+          - label: Footer
+            name: footer
+            widget: object
+            fields:
+              - {
+                  label: Footer Text,
+                  name: footer_text,
+                  widget: string,
+                  default: "Carbonwave",
+                }
+              - {
+                  label: Subscribe,
+                  name: en_subscribe_label,
+                  widget: string,
+                  default: "Subscribe",
+                }
+              - {
+                  label: Es Subscribe,
+                  name: es_subscribe_label,
+                  widget: string,
+                  default: "Subscribe",
+                }
+              - {
+                  label: Subscribe description,
+                  name: en_subscribe_desc,
+                  widget: string,
+                  default: "Join our mailing list and stay up to date with our news.",
+                }
+              - {
+                  label: Es Subscribe description,
+                  name: es_subscribe_desc,
+                  widget: string,
+                  default: "Join our mailing list and stay up to date with our news.",
+                }
+              - { label: Join, name: en_join, widget: string, default: "Join" }
+              - {
+                  label: Es Join,
+                  name: es_join,
+                  widget: string,
+                  default: "Join",
+                }
+              - { label: LinkedIn URL, name: linkedin_url, widget: string }
+              - { label: Twitter URL, name: twitter_url, widget: string }
+              - { label: Instagram URL, name: instagram_url, widget: string }
+      - file: "src/pages/index.md"
+        label: "Landing"
+        name: "index"
+        fields:
+          - {
+              label: "Template Key",
+              name: "templateKey",
+              widget: "hidden",
+              default: "index-page",
+            }
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - {
+                  label: Description,
+                  name: description,
+                  widget: string,
+                  required: false,
+                }
+              - { label: Image, name: image, widget: image, required: false }
+          - label: Intro Section
+            name: intro_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - { label: Button Text, name: action_btn_text, widget: string }
+              - { label: Button Link, name: action_btn_link, widget: string }
+          - label: Content Video Section
+            name: content_video_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - { label: Video Link, name: video_src, widget: string }
+              - {
+                  label: Video Fallback Image,
+                  name: video_poster,
+                  widget: string,
+                }
+              - { label: Video Fallback Text, name: video_alt, widget: string }
+          - label: Counter Section
+            name: counter_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - { label: Counter Date, name: counter_date, widget: string }
+              - { label: Counter Text, name: counter_text, widget: string }
+              - label: Image Boxes
+                name: image_boxes
+                widget: list
+                label_singular: Image Box
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - { label: Image Alt, name: image_alt, widget: string }
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+          - label: Twitter and Recent Posts Section
+            name: twitter_and_recent_posts_section
+            widget: object
+            fields:
+              - label: Left Side
+                name: left_side
+                widget: object
+                fields:
+                  - {
+                      label: Background Image,
+                      name: background_image,
+                      widget: image,
+                    }
+                  - {
+                      label: Twitter Avatar,
+                      name: twitter_avatar,
+                      widget: image,
+                    }
+              - label: Right Side
+                name: right_side
+                widget: object
+                fields:
+                  - {
+                      label: Background Color,
+                      name: background_color,
+                      widget: color,
+                      enableAlpha: true,
+                      allowInput: true,
+                    }
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Button Label, name: button_label, widget: string }
+                  - { label: Button Link, name: button_link, widget: string }
+          - label: In The News Section
+            name: in_the_news_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  label: Background Color,
+                  name: background_color,
+                  widget: color,
+                  enableAlpha: true,
+                  allowInput: true,
+                  required: false,
+                }
+              - {
+                  label: Heading,
+                  name: heading,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Subheading,
+                  name: subheading,
+                  widget: string,
+                  required: false,
+                }
+              - label: Logo Images
+                name: logo_images
+                widget: list
+                label_singular: Logo Image
+                fields:
+                  - {
+                      label: Image,
+                      name: image,
+                      widget: image,
+                      required: false,
+                    }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      label: Image Link,
+                      name: image_link,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Button Label,
+                  name: button_label,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Button Link,
+                  name: button_link,
+                  widget: string,
+                  required: false,
+                }
+          - label: Content Section
+            name: content_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - label: Calculator Labels
+                name: calculator_labels
+                widget: object
+                fields:
+                  - { label: Slider Label, name: slider_label, widget: string }
+                  - {
+                      label: First Element Title,
+                      name: first_element_title,
+                      widget: string,
+                    }
+                  - {
+                      label: First Element Content,
+                      name: first_element_content,
+                      widget: string,
+                    }
+                  - {
+                      label: Second Element Title,
+                      name: second_element_title,
+                      widget: string,
+                    }
+                  - {
+                      label: Second Element Content,
+                      name: second_element_content,
+                      widget: string,
+                    }
+                  - {
+                      label: Third Element Title,
+                      name: third_element_title,
+                      widget: string,
+                    }
+                  - {
+                      label: Third Element Content,
+                      name: third_element_content,
+                      widget: string,
+                    }
+                  - {
+                      label: Fourth Element Title,
+                      name: fourth_element_title,
+                      widget: string,
+                    }
+                  - {
+                      label: Fourth Element Content,
+                      name: fourth_element_content,
+                      widget: string,
+                    }
+              - {
+                  label: Calculator Meta Text,
+                  name: calculator_meta_text,
+                  widget: string,
+                }
+          - label: Carousel Section
+            name: carousel_section
+            widget: object
+            fields:
+              - label: Carousel Images
+                name: carousel_images
+                widget: list
+                label_singular: Carousel Image
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Carousel Next Label,
+                  name: carousel_next_label,
+                  widget: string,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+          - label: Call To Action Section
+            name: call_to_action_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  label: Background Color,
+                  name: background_color,
+                  widget: color,
+                  enableAlpha: true,
+                  allowInput: true,
+                  required: false,
+                }
+              - {
+                  label: Heading,
+                  name: heading,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Subheading,
+                  name: subheading,
+                  widget: string,
+                  required: false,
+                }
+              - label: Logo Images
+                name: logo_images
+                widget: list
+                label_singular: Logo Image
+                required: false
+                fields:
+                  - {
+                      label: Image,
+                      name: image,
+                      widget: image,
+                      required: false,
+                    }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      label: Image Link,
+                      name: image_link,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Button Label,
+                  name: button_label,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Button Link,
+                  name: button_link,
+                  widget: string,
+                  required: false,
+                }
+          - label: Popup
+            name: popup
+            widget: object
+            fields:
+              - {
+                  label: Show Popup,
+                  name: show_popup,
+                  widget: "boolean",
+                  default: false,
+                }
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: string }
+              - { label: Button Label, name: button_label, widget: string }
+              - { label: Button Link, name: button_link, widget: string }
+      - file: "src/pages/team/index.en.md"
+        label: "Team"
+        name: "team"
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "team-page"
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - {
+                  label: Description,
+                  name: description,
+                  widget: string,
+                  required: false,
+                }
+              - { label: Image, name: image, widget: image, required: false }
+          - label: Team Section
+            name: team_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Team members
+                name: team_members
+                widget: list
+                label_singular: Team Member
+                fields:
+                  - { label: Photo, name: photo, widget: image }
+                  - { label: Popup Photo, name: popup_photo, widget: image }
+                  - { label: Name, name: name, widget: string }
+                  - { label: Role, name: role, widget: string }
+                  - label: Bio
+                    name: bio
+                    widget: list
+                    required: false
+                    fields:
+                      - { label: Row, name: row, widget: string }
+      - file: "src/pages/what-we-do/index.en.md"
+        label: "What We Do"
+        name: "what_we_do"
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "what-we-do-page"
+          - label: Intro Section
+            name: intro_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                }
+              - {
+                  label: Mobile Background Image,
+                  name: mobile_background_image,
+                  widget: image,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+          - label: Main Text Section
+            name: main_text_section
+            widget: object
+            fields:
+              - label: Image Boxes
+                name: image_boxes
+                widget: list
+                label_singular: Image Box
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - { label: Image Height, name: image_height, widget: number }
+                  - {
+                      label: Image Mobile Height,
+                      name: image_mobile_height,
+                      widget: number,
+                    }
+                  - {
+                      label: Image Link,
+                      name: image_link,
+                      widget: string,
+                      required: false,
+                    }
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+                  - {
+                      label: Button Label,
+                      name: button_label,
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      label: Button Link,
+                      name: button_link,
+                      widget: string,
+                      required: false,
+                    }
+          - label: Carousel Section
+            name: carousel_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Carousel Images
+                name: carousel_images
+                widget: list
+                label_singular: Carousel Image
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      label: Caption,
+                      name: caption,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Carousel Next Label,
+                  name: carousel_next_label,
+                  widget: string,
+                }
+          - label: Content Section
+            name: content_section
+            widget: object
+            fields:
+              - label: Left Side
+                name: left_side
+                widget: object
+                fields:
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+                  - { label: Button Label, name: button_label, widget: string }
+                  - { label: Button Link, name: button_link, widget: string }
+              - label: Right Side
+                name: right_side
+                widget: object
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+      - file: "src/pages/sourcing/index.en.md"
+        label: "Sourcing"
+        name: "sourcing"
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "sourcing-page"
+          - label: Intro Section
+            name: intro_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                }
+              - {
+                  label: Mobile Background Image,
+                  name: mobile_background_image,
+                  widget: image,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+          - label: Carousel Section
+            name: carousel_section
+            widget: object
+            fields:
+              - label: Carousel Images
+                name: carousel_images
+                widget: list
+                label_singular: Carousel Image
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Carousel Next Label,
+                  name: carousel_next_label,
+                  widget: string,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+          - label: Content Section
+            name: content_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - label: Hover Grid
+                name: hover_grid
+                widget: object
+                fields:
+                  - { label: Action Label, name: action_label, widget: string }
+                  - {
+                      label: First Element Text,
+                      name: first_element_text,
+                      widget: string,
+                    }
+                  - {
+                      label: First Element Image,
+                      name: first_element_image,
+                      widget: image,
+                    }
+                  - {
+                      label: Second Element Text,
+                      name: second_element_text,
+                      widget: string,
+                    }
+                  - {
+                      label: Second Element Image,
+                      name: second_element_image,
+                      widget: image,
+                    }
+                  - {
+                      label: Third Element Text,
+                      name: third_element_text,
+                      widget: string,
+                    }
+                  - {
+                      label: Third Element Image,
+                      name: third_element_image,
+                      widget: image,
+                    }
+                  - {
+                      label: Fourth Element Text,
+                      name: fourth_element_text,
+                      widget: string,
+                    }
+                  - {
+                      label: Fourth Element Image,
+                      name: fourth_element_image,
+                      widget: image,
+                    }
+          - label: Quotes Carousel Section
+            name: quotes_carousel_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Quotes
+                name: quotes
+                widget: list
+                label_singular: Quote
+                fields:
+                  - { label: Quote, name: quote, widget: string }
+                  - { label: Source Name, name: source_name, widget: string }
+                  - { label: Source Place, name: source_place, widget: string }
+          - label: Image Boxes Section
+            name: image_boxes_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - label: Image Boxes
+                name: image_boxes
+                widget: list
+                label_singular: Image Box
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - { label: Image Alt, name: image_alt, widget: string }
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+          - label: Break Section
+            name: break_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  label: Background Color,
+                  name: background_color,
+                  widget: color,
+                  enableAlpha: true,
+                  allowInput: true,
+                  required: false,
+                }
+              - {
+                  label: Heading,
+                  name: heading,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Subheading,
+                  name: subheading,
+                  widget: string,
+                  required: false,
+                }
+          - label: Location Section
+            name: location_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Content, name: content, widget: string }
+              - label: Carousel Images
+                name: carousel_images
+                widget: list
+                label_singular: Carousel Image
+                fields:
+                  - { label: Image, name: image, widget: image }
+              - {
+                  label: Carousel Next Label,
+                  name: carousel_next_label,
+                  widget: string,
+                }
+      - file: "src/templates/blogpage/index.en.md"
+        label: "Blog"
+        name: "blog"
+        widget: object
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "blog-page"
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - {
+                  label: Description,
+                  name: description,
+                  widget: string,
+                  required: false,
+                }
+              - { label: Image, name: image, widget: image, required: false }
+          - { label: Heading, name: heading, widget: string }
+          - { label: Widget Heading, name: widget_heading, widget: string }
+          - {
+              label: Previous Post Label,
+              name: previous_post_label,
+              widget: string,
+            }
+          - { label: Next Post Label, name: next_post_label, widget: string }
+      - file: "src/pages/contact/index.en.md"
+        label: "Contact"
+        name: "contact"
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "contact-page"
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - {
+                  label: Description,
+                  name: description,
+                  widget: string,
+                  required: false,
+                }
+              - { label: Image, name: image, widget: image, required: false }
+          - label: Intro Section
+            name: intro_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                }
+              - {
+                  label: Mobile Background Image,
+                  name: mobile_background_image,
+                  widget: image,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - { label: Form ID, name: form_id, widget: string }
+              - {
+                  label: Consent description,
+                  name: consent_desc,
+                  widget: string,
+                }
+              - { label: Consent message, name: consent_msg, widget: string }
+              - {
+                  label: Consent description 2,
+                  name: consent_desc_2,
+                  widget: string,
+                }
+              - {
+                  label: Consent description 3,
+                  name: consent_desc_3,
+                  widget: string,
+                }
+              - {
+                  label: Send button Label,
+                  name: send_btn_label,
+                  widget: string,
+                }
+              - {
+                  label: Message Sent Error,
+                  name: message_sent_error,
+                  widget: string,
+                }
+              - {
+                  label: Message Sent Confirmation,
+                  name: message_sent_confirmation,
+                  widget: string,
+                }
+          - label: Locations Section
+            name: locations_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Locations
+                name: locations
+                widget: list
+                label_singular: Location
+                fields:
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+                  - {
+                      label: Address Label,
+                      name: address_label,
+                      widget: string,
+                    }
+                  - {
+                      label: Address Content,
+                      name: address_content,
+                      widget: string,
+                    }
+                  - {
+                      label: Address Button Label,
+                      name: address_button_label,
+                      widget: string,
+                    }
+                  - { label: Address Link, name: address_link, widget: string }
+                  - { label: Email Label, name: email_label, widget: string }
+                  - {
+                      label: Email Content,
+                      name: email_content,
+                      widget: string,
+                    }
+                  - label: Carousel Images
+                    name: carousel_images
+                    widget: list
+                    label_singular: Carousel Image
+                    fields:
+                      - { label: Image, name: image, widget: image }
+                  - {
+                      label: Carousel Next Label,
+                      name: carousel_next_label,
+                      widget: string,
+                    }
+      - file: "src/pages/seabalance/index.en.md"
+        label: "SeaBalance Page"
+        name: "seabalance_en"
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "seabalance-page"
+          - {
+              label: SeaBalance Page Link,
+              name: seabalance_page_link,
+              widget: string,
+            }
+      - file: "src/pages/index.es.md"
+        label: Es Landing
+        name: index_es
+        fields:
+          - {
+              label: "Template Key",
+              name: "templateKey",
+              widget: "hidden",
+              default: "index-page",
+            }
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - {
+                  label: Description,
+                  name: description,
+                  widget: string,
+                  required: false,
+                }
+              - { label: Image, name: image, widget: image, required: false }
+          - label: Intro Section
+            name: intro_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - { label: Button Text, name: action_btn_text, widget: string }
+              - { label: Button Link, name: action_btn_link, widget: string }
+          - label: Content Video Section
+            name: content_video_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - { label: Video Link, name: video_src, widget: string }
+              - {
+                  label: Video Fallback Image,
+                  name: video_poster,
+                  widget: string,
+                }
+              - { label: Video Fallback Text, name: video_alt, widget: string }
+          - label: Counter Section
+            name: counter_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - { label: Counter Date, name: counter_date, widget: string }
+              - { label: Counter Text, name: counter_text, widget: string }
+              - label: Image Boxes
+                name: image_boxes
+                widget: list
+                label_singular: Image Box
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - { label: Image Alt, name: image_alt, widget: string }
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+          - label: Twitter and Recent Posts Section
+            name: twitter_and_recent_posts_section
+            widget: object
+            fields:
+              - label: Left Side
+                name: left_side
+                widget: object
+                fields:
+                  - {
+                      label: Background Image,
+                      name: background_image,
+                      widget: image,
+                    }
+                  - {
+                      label: Twitter Avatar,
+                      name: twitter_avatar,
+                      widget: image,
+                    }
+              - label: Right Side
+                name: right_side
+                widget: object
+                fields:
+                  - {
+                      label: Background Color,
+                      name: background_color,
+                      widget: color,
+                      enableAlpha: true,
+                      allowInput: true,
+                    }
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+                  - { label: Button Label, name: button_label, widget: string }
+                  - { label: Button Link, name: button_link, widget: string }
+          - label: In The News Section
+            name: in_the_news_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  label: Background Color,
+                  name: background_color,
+                  widget: color,
+                  enableAlpha: true,
+                  allowInput: true,
+                  required: false,
+                }
+              - {
+                  label: Heading,
+                  name: heading,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Subheading,
+                  name: subheading,
+                  widget: string,
+                  required: false,
+                }
+              - label: Logo Images
+                name: logo_images
+                widget: list
+                label_singular: Logo Image
+                required: false
+                fields:
+                  - {
+                      label: Image,
+                      name: image,
+                      widget: image,
+                      required: false,
+                    }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      label: Image Link,
+                      name: image_link,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Button Label,
+                  name: button_label,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Button Link,
+                  name: button_link,
+                  widget: string,
+                  required: false,
+                }
+          - label: Content Section
+            name: content_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - label: Calculator Labels
+                name: calculator_labels
+                widget: object
+                fields:
+                  - { label: Slider Label, name: slider_label, widget: string }
+                  - {
+                      label: First Element Title,
+                      name: first_element_title,
+                      widget: string,
+                    }
+                  - {
+                      label: First Element Content,
+                      name: first_element_content,
+                      widget: string,
+                    }
+                  - {
+                      label: Second Element Title,
+                      name: second_element_title,
+                      widget: string,
+                    }
+                  - {
+                      label: Second Element Content,
+                      name: second_element_content,
+                      widget: string,
+                    }
+                  - {
+                      label: Third Element Title,
+                      name: third_element_title,
+                      widget: string,
+                    }
+                  - {
+                      label: Third Element Content,
+                      name: third_element_content,
+                      widget: string,
+                    }
+                  - {
+                      label: Fourth Element Title,
+                      name: fourth_element_title,
+                      widget: string,
+                    }
+                  - {
+                      label: Fourth Element Content,
+                      name: fourth_element_content,
+                      widget: string,
+                    }
+              - {
+                  label: Calculator Meta Text,
+                  name: calculator_meta_text,
+                  widget: string,
+                }
+          - label: Carousel Section
+            name: carousel_section
+            widget: object
+            fields:
+              - label: Carousel Images
+                name: carousel_images
+                widget: list
+                label_singular: Carousel Image
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Carousel Next Label,
+                  name: carousel_next_label,
+                  widget: string,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+          - label: Call To Action Section
+            name: call_to_action_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  label: Background Color,
+                  name: background_color,
+                  widget: color,
+                  enableAlpha: true,
+                  allowInput: true,
+                  required: false,
+                }
+              - {
+                  label: Heading,
+                  name: heading,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Subheading,
+                  name: subheading,
+                  widget: string,
+                  required: false,
+                }
+              - label: Logo Images
+                name: logo_images
+                widget: list
+                label_singular: Logo Image
+                required: false
+                fields:
+                  - {
+                      label: Image,
+                      name: image,
+                      widget: image,
+                      required: false,
+                    }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      label: Image Link,
+                      name: image_link,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Button Label,
+                  name: button_label,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Button Link,
+                  name: button_link,
+                  widget: string,
+                  required: false,
+                }
+          - label: Popup
+            name: popup
+            widget: object
+            fields:
+              - {
+                  label: Show Popup,
+                  name: show_popup,
+                  widget: "boolean",
+                  default: false,
+                }
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: string }
+              - { label: Button Label, name: button_label, widget: string }
+              - { label: Button Link, name: button_link, widget: string }
+      - file: "src/pages/team/index.es.md"
+        label: Es Team
+        name: team_es
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "team-page"
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - {
+                  label: Description,
+                  name: description,
+                  widget: string,
+                  required: false,
+                }
+              - { label: Image, name: image, widget: image, required: false }
+          - label: Team Section
+            name: team_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Team members
+                name: team_members
+                widget: list
+                label_singular: Team Member
+                fields:
+                  - { label: Photo, name: photo, widget: image }
+                  - { label: Popup Photo, name: popup_photo, widget: image }
+                  - { label: Name, name: name, widget: string }
+                  - { label: Role, name: role, widget: string }
+                  - label: Bio
+                    name: bio
+                    widget: list
+                    required: false
+                    fields:
+                      - { label: Row, name: row, widget: string }
+      - file: "src/pages/what-we-do/index.es.md"
+        label: "Es What We Do"
+        name: "what_we_do_es"
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "what-we-do-page"
+          - label: Intro Section
+            name: intro_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                }
+              - {
+                  label: Mobile Background Image,
+                  name: mobile_background_image,
+                  widget: image,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+          - label: Main Text Section
+            name: main_text_section
+            widget: object
+            fields:
+              - label: Image Boxes
+                name: image_boxes
+                widget: list
+                label_singular: Image Box
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - { label: Image Height, name: image_height, widget: number }
+                  - {
+                      label: Image Mobile Height,
+                      name: image_mobile_height,
+                      widget: number,
+                    }
+                  - {
+                      label: Image Link,
+                      name: image_link,
+                      widget: string,
+                      required: false,
+                    }
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+                  - {
+                      label: Button Label,
+                      name: button_label,
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      label: Button Link,
+                      name: button_link,
+                      widget: string,
+                      required: false,
+                    }
+          - label: Carousel Section
+            name: carousel_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Carousel Images
+                name: carousel_images
+                widget: list
+                label_singular: Carousel Image
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+                  - {
+                      label: Caption,
+                      name: caption,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Carousel Next Label,
+                  name: carousel_next_label,
+                  widget: string,
+                }
+          - label: Content Section
+            name: content_section
+            widget: object
+            fields:
+              - label: Left Side
+                name: left_side
+                widget: object
+                fields:
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+                  - { label: Button Label, name: button_label, widget: string }
+                  - { label: Button Link, name: button_link, widget: string }
+              - label: Right Side
+                name: right_side
+                widget: object
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+      - file: "src/pages/sourcing/index.es.md"
+        label: "Es Sourcing"
+        name: "sourcing_es"
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "sourcing-page"
+          - label: Intro Section
+            name: intro_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                }
+              - {
+                  label: Mobile Background Image,
+                  name: mobile_background_image,
+                  widget: image,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+          - label: Carousel Section
+            name: carousel_section
+            widget: object
+            fields:
+              - label: Carousel Images
+                name: carousel_images
+                widget: list
+                label_singular: Carousel Image
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - {
+                      label: Image Alt,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                    }
+              - {
+                  label: Carousel Next Label,
+                  name: carousel_next_label,
+                  widget: string,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+          - label: Content Section
+            name: content_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - label: Hover Grid
+                name: hover_grid
+                widget: object
+                fields:
+                  - { label: Action Label, name: action_label, widget: string }
+                  - {
+                      label: First Element Text,
+                      name: first_element_text,
+                      widget: string,
+                    }
+                  - {
+                      label: First Element Image,
+                      name: first_element_image,
+                      widget: image,
+                    }
+                  - {
+                      label: Second Element Text,
+                      name: second_element_text,
+                      widget: string,
+                    }
+                  - {
+                      label: Second Element Image,
+                      name: second_element_image,
+                      widget: image,
+                    }
+                  - {
+                      label: Third Element Text,
+                      name: third_element_text,
+                      widget: string,
+                    }
+                  - {
+                      label: Third Element Image,
+                      name: third_element_image,
+                      widget: image,
+                    }
+                  - {
+                      label: Fourth Element Text,
+                      name: fourth_element_text,
+                      widget: string,
+                    }
+                  - {
+                      label: Fourth Element Image,
+                      name: fourth_element_image,
+                      widget: image,
+                    }
+          - label: Quotes Carousel Section
+            name: quotes_carousel_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Quotes
+                name: quotes
+                widget: list
+                label_singular: Quote
+                fields:
+                  - { label: Quote, name: quote, widget: string }
+                  - { label: Source Name, name: source_name, widget: string }
+                  - { label: Source Place, name: source_place, widget: string }
+          - label: Image Boxes Section
+            name: image_boxes_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - label: Image Boxes
+                name: image_boxes
+                widget: list
+                label_singular: Image Box
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - { label: Image Alt, name: image_alt, widget: string }
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+          - label: Break Section
+            name: break_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                  required: false,
+                }
+              - {
+                  label: Background Color,
+                  name: background_color,
+                  widget: color,
+                  enableAlpha: true,
+                  allowInput: true,
+                  required: false,
+                }
+              - {
+                  label: Heading,
+                  name: heading,
+                  widget: string,
+                  required: false,
+                }
+              - {
+                  label: Subheading,
+                  name: subheading,
+                  widget: string,
+                  required: false,
+                }
+          - label: Location Section
+            name: location_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - { label: Content, name: content, widget: string }
+              - label: Carousel Images
+                name: carousel_images
+                widget: list
+                label_singular: Carousel Image
+                fields:
+                  - { label: Image, name: image, widget: image }
+              - {
+                  label: Carousel Next Label,
+                  name: carousel_next_label,
+                  widget: string,
+                }
+      - file: "src/templates/blogpage/index.es.md"
+        label: "Es Blog"
+        name: "blog_es"
+        widget: object
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "blog-page"
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - {
+                  label: Description,
+                  name: description,
+                  widget: string,
+                  required: false,
+                }
+              - { label: Image, name: image, widget: image, required: false }
+          - { label: Heading, name: heading, widget: string }
+          - { label: Widget Heading, name: widget_heading, widget: string }
+          - {
+              label: Previous Post Label,
+              name: previous_post_label,
+              widget: string,
+            }
+          - { label: Next Post Label, name: next_post_label, widget: string }
+      - file: "src/pages/contact/index.es.md"
+        label: "Es Contact"
+        name: "contact_es"
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "contact-page"
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string, required: false }
+              - {
+                  label: Description,
+                  name: description,
+                  widget: string,
+                  required: false,
+                }
+              - { label: Image, name: image, widget: image, required: false }
+          - label: Intro Section
+            name: intro_section
+            widget: object
+            fields:
+              - {
+                  label: Background Image,
+                  name: background_image,
+                  widget: image,
+                }
+              - {
+                  label: Mobile Background Image,
+                  name: mobile_background_image,
+                  widget: image,
+                }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Subheading, name: subheading, widget: string }
+              - { label: Form ID, name: form_id, widget: string }
+              - {
+                  label: Consent description,
+                  name: consent_desc,
+                  widget: string,
+                }
+              - { label: Consent message, name: consent_msg, widget: string }
+              - {
+                  label: Consent description 2,
+                  name: consent_desc_2,
+                  widget: string,
+                }
+              - {
+                  label: Consent description 3,
+                  name: consent_desc_3,
+                  widget: string,
+                }
+              - {
+                  label: Send button Label,
+                  name: send_btn_label,
+                  widget: string,
+                }
+              - {
+                  label: Message Sent Error,
+                  name: message_sent_error,
+                  widget: string,
+                }
+              - {
+                  label: Message Sent Confirmation,
+                  name: message_sent_confirmation,
+                  widget: string,
+                }
+          - label: Locations Section
+            name: locations_section
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string }
+              - label: Locations
+                name: locations
+                widget: list
+                label_singular: Location
+                fields:
+                  - { label: Heading, name: heading, widget: string }
+                  - { label: Subheading, name: subheading, widget: string }
+                  - {
+                      label: Address Label,
+                      name: address_label,
+                      widget: string,
+                    }
+                  - {
+                      label: Address Content,
+                      name: address_content,
+                      widget: string,
+                    }
+                  - {
+                      label: Address Button Label,
+                      name: address_button_label,
+                      widget: string,
+                    }
+                  - { label: Address Link, name: address_link, widget: string }
+                  - { label: Email Label, name: email_label, widget: string }
+                  - {
+                      label: Email Content,
+                      name: email_content,
+                      widget: string,
+                    }
+                  - label: Carousel Images
+                    name: carousel_images
+                    widget: list
+                    label_singular: Carousel Image
+                    fields:
+                      - { label: Image, name: image, widget: image }
+                  - {
+                      label: Carousel Next Label,
+                      name: carousel_next_label,
+                      widget: string,
+                    }
+      - file: "src/pages/seabalance/index.es.md"
+        label: "ES SeaBalance Page"
+        name: "seabalance_es"
+        fields:
+          - label: "Template Key"
+            name: "templateKey"
+            widget: "hidden"
+            default: "seabalance-page"
+          - {
+              label: SeaBalance Page Link,
+              name: seabalance_page_link,
+              widget: string,
+            }

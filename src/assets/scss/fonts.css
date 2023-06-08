@@ -1,0 +1,5 @@
+@font-face {
+  font-family: "Degular";
+  font-weight: 400;
+  src: url("../fonts/Degular-Regular.woff2") format("woff2"), url("../fonts/Degular-Regular.woff") format("woff"), url("../fonts/Degular-Regular.otf") format("opentype");
+}
